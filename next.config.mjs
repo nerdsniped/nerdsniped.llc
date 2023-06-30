@@ -2,12 +2,23 @@ import nextMDX from '@next/mdx'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
 
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ **/
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'mdx'],
+  output: 'export',
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+  compiler: {
+    relay: {
+      language: 'typescript',
+    },
   },
 }
 

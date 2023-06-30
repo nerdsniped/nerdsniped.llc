@@ -1,0 +1,37 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Link from 'next/link'
+import Image from 'next/image'
+
+export const meta = {
+  author: 'Samuel Giddins',
+  date: '2023-06-30',
+  title: 'We have been Nerdsniped',
+  description:
+    'How Nerdsniped LLC came to be. (See what I did there? I made a rhyme.)',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+Hi! I'm Samuel Giddins (aka `@segiddins`), and I'm the principal of Nerdsniped LLC.
+
+I started Nerdsniped in January of 2023, after quitting a highly unsatisfactory job.
+Realizing that I needed some time to recover, I decided to spend some time contracting.
+Over the past 5 months, I've been working full-time as a contractor, and doing so via Nerdsniped (aka this very LLC).
+
+Why Nerdsniped?
+Well, there's an <Link href="https://xkcd.com" className="font-mono">xkcd</Link> for that:
+
+<Link href="https://xkcd.com/356/">
+  <Image
+    src="https://imgs.xkcd.com/comics/nerd_sniping.png"
+    width={740}
+    height={371}
+  />
+</Link>
+
+As an engineer, I get nerdsniped a lot.
+Once presented with an interesting problem... well, it's hard for me to put it down until I've solved it.
+
+Many of the projects listed on this site are the result of me being nerdsniped.
+
+As the principal of Nerdsniped LLC, I'm available to be nerdsniped by you, in exchange for money. <Link href="mailto:segiddins@nerdsniped.llc">Get in touch</Link>.

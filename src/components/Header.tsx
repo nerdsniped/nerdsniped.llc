@@ -1,12 +1,19 @@
-import { Fragment, useEffect, useRef } from 'react'
+import {
+  ClassAttributes,
+  Fragment,
+  HTMLAttributes,
+  JSX,
+  useEffect,
+  useRef,
+} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Popover, Transition } from '@headlessui/react'
-import clsx from 'clsx'
+import clsx, { ClassValue } from 'clsx'
+import CpuChipIcon from '@heroicons/react/24/solid/CpuChipIcon'
 
 import { Container } from '@/components/Container'
-import avatarImage from '@/images/avatar.jpg'
 
 function CloseIcon(props) {
   return (
@@ -124,8 +131,9 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
-                <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-                <MobileNavItem href="/uses">Uses</MobileNavItem>
+                <MobileNavItem href="/expertise">
+                  Areas of Expertise
+                </MobileNavItem>
               </ul>
             </nav>
           </Popover.Panel>
@@ -135,7 +143,13 @@ function MobileNavigation(props) {
   )
 }
 
-function NavItem({ href, children }) {
+function NavItem({
+  href,
+  children,
+}: {
+  href: string
+  children?: React.ReactNode
+}) {
   let isActive = useRouter().pathname === href
 
   return (
@@ -158,15 +172,18 @@ function NavItem({ href, children }) {
   )
 }
 
-function DesktopNavigation(props) {
+function DesktopNavigation(
+  props: JSX.IntrinsicAttributes &
+    ClassAttributes<HTMLElement> &
+    HTMLAttributes<HTMLElement>
+) {
   return (
     <nav {...props}>
-      <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+      <ul className="flex items-center rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+        <NavItem href="/expertise">Expertise</NavItem>
       </ul>
     </nav>
   )
@@ -207,13 +224,18 @@ function ModeToggle() {
   )
 }
 
-function clamp(number, a, b) {
+function clamp(number: number, a: number, b: number) {
   let min = Math.min(a, b)
   let max = Math.max(a, b)
   return Math.min(Math.max(number, min), max)
 }
 
-function AvatarContainer({ className, ...props }) {
+function AvatarContainer({
+  className,
+  ...props
+}: Omit<JSX.IntrinsicElements['div'], 'className'> & {
+  className?: ClassValue
+}) {
   return (
     <div
       className={clsx(
@@ -225,7 +247,14 @@ function AvatarContainer({ className, ...props }) {
   )
 }
 
-function Avatar({ large = false, className, ...props }) {
+function Avatar({
+  large = false,
+  className,
+  ...props
+}: Omit<React.ComponentProps<typeof Link>, 'href' | 'aria-label'> & {
+  large?: boolean
+  className?: ClassValue
+}) {
   return (
     <Link
       href="/"
@@ -233,8 +262,15 @@ function Avatar({ large = false, className, ...props }) {
       className={clsx(className, 'pointer-events-auto')}
       {...props}
     >
-      <Image
-        src={avatarImage}
+      <CpuChipIcon
+        className={clsx(
+          'rounded-full bg-zinc-100 fill-zinc-800 object-cover dark:bg-zinc-800 dark:fill-zinc-100',
+          large ? 'h-16 w-16' : 'h-9 w-9',
+          large ? 'p-2' : 'p-1'
+        )}
+      />
+      {/* <Image
+        src={<CpuChipIcon />}
         alt=""
         sizes={large ? '4rem' : '2.25rem'}
         className={clsx(
@@ -242,7 +278,7 @@ function Avatar({ large = false, className, ...props }) {
           large ? 'h-16 w-16' : 'h-9 w-9'
         )}
         priority
-      />
+      /> */}
     </Link>
   )
 }
@@ -250,8 +286,8 @@ function Avatar({ large = false, className, ...props }) {
 export function Header() {
   let isHomePage = useRouter().pathname === '/'
 
-  let headerRef = useRef()
-  let avatarRef = useRef()
+  let headerRef = useRef<HTMLDivElement>()
+  let avatarRef = useRef<HTMLDivElement>()
   let isInitial = useRef(true)
 
   useEffect(() => {
@@ -367,11 +403,11 @@ export function Header() {
             />
             <Container
               className="top-0 order-last -mb-3 pt-3"
-              style={{ position: 'var(--header-position)' }}
+              style={{ position: 'var(--header-position)' as any }}
             >
               <div
                 className="top-[var(--avatar-top,theme(spacing.3))] w-full"
-                style={{ position: 'var(--header-inner-position)' }}
+                style={{ position: 'var(--header-inner-position)' as any }}
               >
                 <div className="relative">
                   <AvatarContainer
@@ -394,11 +430,11 @@ export function Header() {
         <div
           ref={headerRef}
           className="top-0 z-10 h-16 pt-6"
-          style={{ position: 'var(--header-position)' }}
+          style={{ position: 'var(--header-position)' as any }}
         >
           <Container
             className="top-[var(--header-top,theme(spacing.6))] w-full"
-            style={{ position: 'var(--header-inner-position)' }}
+            style={{ position: 'var(--header-inner-position)' as any }}
           >
             <div className="relative flex gap-4">
               <div className="flex flex-1">

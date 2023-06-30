@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import clsx from 'clsx'
+import Link, { LinkProps } from 'next/link'
+import clsx, { ClassValue } from 'clsx'
+import { Component, ReactHTML } from 'react'
 
 function ChevronRightIcon(props) {
   return (
@@ -14,7 +15,15 @@ function ChevronRightIcon(props) {
   )
 }
 
-export function Card({ as: Component = 'div', className, children }) {
+export function Card({
+  as: Component = 'div',
+  className,
+  children,
+}: {
+  as?: React.ElementType
+  className?: ClassValue
+  children?: React.ReactNode
+}) {
   return (
     <Component
       className={clsx(className, 'group relative flex flex-col items-start')}
@@ -24,7 +33,12 @@ export function Card({ as: Component = 'div', className, children }) {
   )
 }
 
-Card.Link = function CardLink({ children, ...props }) {
+Card.Link = function CardLink({
+  children,
+  ...props
+}: {
+  children?: React.ReactNode
+} & LinkProps) {
   return (
     <>
       <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl" />
@@ -36,7 +50,15 @@ Card.Link = function CardLink({ children, ...props }) {
   )
 }
 
-Card.Title = function CardTitle({ as: Component = 'h2', href, children }) {
+Card.Title = function CardTitle({
+  as: Component = 'h2',
+  href,
+  children,
+}: {
+  as?: React.ElementType
+  href?: string
+  children?: React.ReactNode
+}) {
   return (
     <Component className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
       {href ? <Card.Link href={href}>{children}</Card.Link> : children}
@@ -44,7 +66,9 @@ Card.Title = function CardTitle({ as: Component = 'h2', href, children }) {
   )
 }
 
-Card.Description = function CardDescription({ children }) {
+Card.Description = function CardDescription({
+  children,
+}: Pick<React.ComponentPropsWithoutRef<ReactHTML['p']>, 'children'>) {
   return (
     <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
       {children}
@@ -64,13 +88,18 @@ Card.Cta = function CardCta({ children }) {
   )
 }
 
-Card.Eyebrow = function CardEyebrow({
+Card.Eyebrow = function CardEyebrow<C extends React.ElementType>({
   as: Component = 'p',
   decorate = false,
   className,
   children,
   ...props
-}) {
+}: {
+  as?: C
+  decorate?: boolean
+  className?: ClassValue
+  children?: React.ReactNode
+} & React.ComponentProps<C>) {
   return (
     <Component
       className={clsx(
