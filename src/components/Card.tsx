@@ -2,7 +2,7 @@ import Link, { LinkProps } from 'next/link'
 import clsx, { ClassValue } from 'clsx'
 import { Component, ReactHTML } from 'react'
 
-function ChevronRightIcon(props) {
+function ChevronRightIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
       <path
@@ -68,7 +68,7 @@ Card.Title = function CardTitle({
 
 Card.Description = function CardDescription({
   children,
-}: Pick<React.ComponentPropsWithoutRef<ReactHTML['p']>, 'children'>) {
+}: Pick<React.ComponentProps<'p'>, 'children'>) {
   return (
     <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
       {children}
@@ -76,7 +76,7 @@ Card.Description = function CardDescription({
   )
 }
 
-Card.Cta = function CardCta({ children }) {
+Card.Cta = function CardCta({ children }: { children?: React.ReactNode }) {
   return (
     <div
       aria-hidden="true"

@@ -1,12 +1,22 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
+import clsx, { ClassValue } from 'clsx'
 
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 
-function SocialLink({ className, href, children, icon: Icon }) {
+function SocialLink({
+  className,
+  href,
+  children,
+  icon: Icon,
+}: {
+  className?: ClassValue
+  href: string
+  children?: React.ReactNode
+  icon: React.ComponentType<React.ComponentProps<'svg'>>
+}) {
   return (
     <li className={clsx(className, 'flex')}>
       <Link

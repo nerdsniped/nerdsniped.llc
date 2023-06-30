@@ -7,7 +7,7 @@ import { getAllArticles } from './getAllArticles'
 
 export async function generateRssFeed() {
   let articles = await getAllArticles()
-  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL!
   let author = {
     name: 'Samuel Giddins',
     email: 'segiddins@nerdsniped.llc',
@@ -30,9 +30,10 @@ export async function generateRssFeed() {
 
   for (let article of articles) {
     let url = `${siteUrl}/articles/${article.slug}`
+    let C = article.component
     let html = ReactDOMServer.renderToStaticMarkup(
       <MemoryRouterProvider>
-        <article.component isRssFeed />
+        <C isRssFeed meta={article} />
       </MemoryRouterProvider>
     )
 

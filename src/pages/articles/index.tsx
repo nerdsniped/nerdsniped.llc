@@ -3,9 +3,9 @@ import Head from 'next/head'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
-import { getAllArticles } from '@/lib/getAllArticles'
+import { getAllArticles, Article } from '@/lib/getAllArticles'
 
-function Article({ article }) {
+function Article({ article }: { article: Article }) {
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
       <Card className="md:col-span-3">
@@ -34,15 +34,12 @@ function Article({ article }) {
   )
 }
 
-export default function ArticlesIndex({ articles }) {
+export default function ArticlesIndex({ articles }: { articles: Article[] }) {
   return (
     <>
       <Head>
         <title>Articles - Nerdsniped LLC</title>
-        <meta
-          name="description"
-          content="Some thoughts about computers."
-        />
+        <meta name="description" content="Some thoughts about computers." />
       </Head>
       <SimpleLayout
         title="Some thoughts."

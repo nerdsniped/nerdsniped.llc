@@ -4,8 +4,9 @@ import { useRouter } from 'next/router'
 import { Container } from '@/components/Container'
 import { Prose } from '@/components/Prose'
 import { formatDate } from '@/lib/formatDate'
+import { Article } from '@/lib/getAllArticles'
 
-function ArrowLeftIcon(props) {
+function ArrowLeftIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
       <path
@@ -23,6 +24,11 @@ export function ArticleLayout({
   meta,
   isRssFeed = false,
   previousPathname,
+}: {
+  children?: React.ReactNode
+  meta: Omit<Article, 'component' | 'slug'>
+  isRssFeed?: boolean
+  previousPathname?: string
 }) {
   let router = useRouter()
 

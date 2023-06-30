@@ -3,19 +3,19 @@ import {
   Fragment,
   HTMLAttributes,
   JSX,
+  LegacyRef,
   useEffect,
   useRef,
 } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Popover, Transition } from '@headlessui/react'
+import { Popover, PopoverProps, Transition } from '@headlessui/react'
 import clsx, { ClassValue } from 'clsx'
 import CpuChipIcon from '@heroicons/react/24/solid/CpuChipIcon'
 
 import { Container } from '@/components/Container'
 
-function CloseIcon(props) {
+function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
       <path
@@ -30,7 +30,7 @@ function CloseIcon(props) {
   )
 }
 
-function ChevronDownIcon(props) {
+function ChevronDownIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 8 6" aria-hidden="true" {...props}>
       <path
@@ -44,7 +44,7 @@ function ChevronDownIcon(props) {
   )
 }
 
-function SunIcon(props) {
+function SunIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ function SunIcon(props) {
   )
 }
 
-function MoonIcon(props) {
+function MoonIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
       <path
@@ -76,7 +76,13 @@ function MoonIcon(props) {
   )
 }
 
-function MobileNavItem({ href, children }) {
+function MobileNavItem({
+  href,
+  children,
+}: {
+  href: string
+  children?: React.ReactNode
+}) {
   return (
     <li>
       <Popover.Button as={Link} href={href} className="block py-2">
@@ -86,7 +92,7 @@ function MobileNavItem({ href, children }) {
   )
 }
 
-function MobileNavigation(props) {
+function MobileNavigation(props: PopoverProps<'div'>) {
   return (
     <Popover {...props}>
       <Popover.Button className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
@@ -286,24 +292,24 @@ function Avatar({
 export function Header() {
   let isHomePage = useRouter().pathname === '/'
 
-  let headerRef = useRef<HTMLDivElement>()
-  let avatarRef = useRef<HTMLDivElement>()
+  let headerRef = useRef<HTMLDivElement>(null)
+  let avatarRef = useRef<HTMLDivElement>(null)
   let isInitial = useRef(true)
 
   useEffect(() => {
     let downDelay = avatarRef.current?.offsetTop ?? 0
     let upDelay = 64
 
-    function setProperty(property, value) {
+    function setProperty(property: string, value: string | null) {
       document.documentElement.style.setProperty(property, value)
     }
 
-    function removeProperty(property) {
+    function removeProperty(property: string) {
       document.documentElement.style.removeProperty(property)
     }
 
     function updateHeaderStyles() {
-      let { top, height } = headerRef.current.getBoundingClientRect()
+      let { top, height } = headerRef.current!.getBoundingClientRect()
       let scrollY = clamp(
         window.scrollY,
         0,
@@ -367,7 +373,7 @@ export function Header() {
       let borderTransform = `translate3d(${borderX}rem, 0, 0) scale(${borderScale})`
 
       setProperty('--avatar-border-transform', borderTransform)
-      setProperty('--avatar-border-opacity', scale === toScale ? 1 : 0)
+      setProperty('--avatar-border-opacity', scale === toScale ? '1' : '0')
     }
 
     function updateStyles() {
